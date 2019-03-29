@@ -1,5 +1,5 @@
 <template>
-    <h3>TODO it!</h3>
+    <h3>{{ this.$store.state.headerText}}</h3>
 </template>
 
 <script>
