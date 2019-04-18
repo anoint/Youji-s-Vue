@@ -3,10 +3,10 @@
         <transition-group name="list" tag="ul"> 
             <li v-for="(todoItem, index) in this.storedTodoItems" v-bind:key="todoItem.item">
                 <i class="fas fa-check" 
-                      v-on:click="toggleComplete(todoItem, index)"
+                      v-on:click="toggleComplete({todoItem, index})"
                       v-bind:class="{textCompleted: todoItem.completed}"></i>
                 <span v-bind:class="{textCompleted: todoItem.completed}">{{ todoItem.item }}</span>                
-                <button v-on:click="deleteTodo(todoItem, index)">삭제</button>
+                <button v-on:click="deleteTodo({todoItem, index})">삭제</button>
             </li>
         </transition-group>
     </div>
