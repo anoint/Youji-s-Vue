@@ -9,8 +9,7 @@
 export default {
     data() {
         return {
-            newTodoItem: '',
-            todoItems: []
+            newTodoItem: ''
         }
     },
     methods: {
@@ -18,9 +17,8 @@ export default {
             let newItem = this.newTodoItem
             if(newItem != '')
             {
-                const obj = { item: newItem, completed: false}
-                this.todoItems.push(newItem, JSON.stringify(obj))
-                localStorage.setItem(newItem, JSON.stringify(obj))
+                console.log('1111');
+                this.$emit('addOneTodo', this.newTodoItem)
                 this.clear()
             }
             else
