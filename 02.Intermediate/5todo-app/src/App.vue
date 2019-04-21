@@ -1,9 +1,9 @@
 <template>
   <div id="app">
      <TodoHeader></TodoHeader>
-     <TodoInput v-on:addTodo="addOneTodo"></TodoInput>
-     <TodoList v-bind:propsdata="todoItems"></TodoList>
-     <TodoFooter></TodoFooter>
+     <TodoInput @addOneTodo="addOneTodo"></TodoInput>
+     <TodoList v-bind:propsdata="todoItems" @deleteOneTodo="deleteOneTodo" @completedOneTodo="completedOneTodo"></TodoList>
+     <TodoFooter @allDeleteTodo="allDeleteTodo"></TodoFooter>
   </div>
 </template>
 
@@ -29,10 +29,9 @@ export default {
         {
             for (let i = 0; i < localStorage.length; i++) {
                 let key = localStorage.key(i)
-            
+
                 if(key != 'loglevel:webpack-dev-server')
                 {
-                    //console.log(JSON.parse(localStorage.getItem(key)))
                     this.todoItems.push(JSON.parse(localStorage.getItem(key)))
                 }
             }
@@ -41,16 +40,47 @@ export default {
     methods: {
       addOneTodo(newItem)
       {
-                console.log('11133331');
-          
-          const obj = { item: newItem, completed: false}
-          this.todoItems.push(newItem, JSON.stringify(obj))
-          localStorage.setItem(newItem, JSON.stringify(obj))
+          if(this.checkItem(newItem))
+          {
+            const obj = { item: newItem, completed: false}
+            this.todoItems.push(obj)
+            localStorage.setItem(newItem, JSON.stringify(obj))
+          }
+      },
+      checkItem(newItem)
+      {
+          let checkFlag = true
+          for (let i = 0; i < localStorage.length; i++) {
+                let key = localStorage.key(i)
+
+                if(key == newItem)
+                {
+                    checkFlag = false
+                }
+          }
+          return checkFlag
+      },
+      deleteOneTodo(todoItem, index)
+      {
+        console.log('deleteOneTodo')
+          localStorage.removeItem(todoItem.item)
+          this.todoItems.splice(index, 1)
+      },
+      completedOneTodo(todoItem, index)
+      {
+          todoItem.completed = !todoItem.completed
+          localStorage.removeItem(index)
+          localStorage.setItem(todoItem.item, JSON.stringify(todoItem))
+      },
+      allDeleteTodo()
+      {
+          this.todoItems = []
+          localStorage.clear()
       }
     }
 }
 </script>
 
 <style>
- 
+
 </style>

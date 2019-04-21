@@ -14,8 +14,7 @@ export default {
     methods: {
         clearAll()
         {
-            this.todoItems = []
-            localStorage.clear()
+            this.$emit('allDeleteTodo')
         }
     }
 }
