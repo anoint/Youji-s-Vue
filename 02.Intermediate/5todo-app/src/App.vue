@@ -41,7 +41,7 @@ export default {
     methods: {
       addOneTodo(newItem)
       {
-                console.log('11133331');
+               // console.log('11133331');
           
           const obj = { item: newItem, completed: false}
           this.todoItems.push(newItem, JSON.stringify(obj))
