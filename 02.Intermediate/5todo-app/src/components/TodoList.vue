@@ -1,10 +1,10 @@
 <template>
     <div>
         <ul>
-            <li v-for="(todoItem, index) in propsdata" v-bind:key="todoItem.item">
-                <span class="fas fa-check" v-bind:class="{textCompleted: todoItem.completed}"
+            <li v-for="(todoItem, index) in propsdata" :key="todoItem.item">
+                <span class="fas fa-check" :class="{textCompleted: todoItem.completed}"
                         @click="completedTodo(todoItem, index)"></span>
-                <span v-bind:class="{textCompleted: todoItem.completed}">
+                <span :class="{textCompleted: todoItem.completed}">
                     {{ todoItem.item }}
                 </span>
                 <button @click="deleteTodo(todoItem, index)">삭제</button>
@@ -19,14 +19,11 @@ export default {
     methods: {
         deleteTodo(todoItem, index)
         {
-            localStorage.removeItem(todoItem)
-            this.todoItems.splice(index, 1)
+            this.$emit('deleteOneTodo', todoItem, index)
         },
         completedTodo(todoItem, index)
         {
-            todoItem.completed = !todoItem.completed
-            localStorage.removeItem(index)
-            localStorage.setItem(todoItem.item, JSON.stringify(todoItem))
+            this.$emit('completedOneTodo', todoItem, index)
         }
     }
 }
